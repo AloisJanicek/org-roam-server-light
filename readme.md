@@ -520,7 +520,6 @@ from http.server import BaseHTTPRequestHandler
 from routes.main import routes
 
 from response.templateHandler import TemplateHandler
-from response.staticHandler import StaticHandler
 from response.badRequestHandler import BadRequestHandler
 
 
