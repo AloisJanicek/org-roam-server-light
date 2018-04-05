@@ -1,0 +1,9 @@
+{
+    "/" : {
+        "template" : "index"
+    },
+
+    "/blue" : {
+        "template" : "blue"
+    }
+}
