@@ -5,18 +5,13 @@ class TemplateHandler(RequestHandler):
         super().__init__()
         self.contentType = 'text/html'
 
-    def find(self, name):
+    def find(self, routeData):
         try:
-            template_file = open('templates/{}.html'.format(name['template']))
+            template_file = open('templates/{}'.format(routeData['template']))
             self.contents = template_file
             self.setStatus(200)
             return True
         except:
             self.setStatus(404)
             return False
-
-    def getType(self):
-        return 'template'
-        
-
 
