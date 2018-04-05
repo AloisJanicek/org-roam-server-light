@@ -1,4 +1,4 @@
-#Creating a Python3 Webserver From The Ground Up
+# Creating a Python3 Webserver From The Ground Up
 
 Jumping into Python when your previous experience is mostly in web-based languages (PHP, Javascript, Ruby) can be a daunting task. Python has all of the tools available to make a strong HTTP Server or framework, as well as plenty of mature web frameworks to get started with, but the purpose of this tutorial/write-up isn't to show you how to leverage those, but how to build one from the ground up (similarly to how you'd start learning with NodeJS).
 
@@ -14,9 +14,9 @@ The full source code is available on Git, with the appropriate versions tagged. 
 
 Let's dive right in.
 
-##Setting Up
+## Setting Up
 
-###Python3
+### Python3
 
 First and foremost, let's make sure we're running the right version - we'll be building this on Python3, which you'll need to have installed. 
 
@@ -24,13 +24,13 @@ You can run a `which python3` on a Linux box to make sure it's available, if not
 
 Note - on Macs, the version that ships out of the box (i.e. what happens when you run `python`) is version 2, which means you'll need to install the latest version. Homebrew makes this easy.
 
-###Setting Up Our Editor
+### Setting Up Our Editor
 
 You can use your editor of choice for this, but I'd recommend at least the following:
 - The syntax package for your editor
 - A linter (pylint is a good choice)
 
-###Setting Up Our Project
+### Setting Up Our Project
 
 #### `main.py`
 
@@ -118,7 +118,7 @@ print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
 
 Next, let's set up our server handler.
 
-####`server.py`
+#### `server.py`
 
 Let's go ahead and stub out the file with the following class:
 
@@ -194,7 +194,7 @@ Let's look at the changes, starting at our `handle_http` method.
 
 As stated before, this method is going to take care of sending our header and generally putting the response in a format where it's ready to be sent. All arguments in our `handle_http` method will be pased in from the `respond` method. The flow of data will look like this when a request is received:
 
-`do_* Method` -> `respond Method` -> `handle_http Method`
+`do_*` receives request &rarr; `respond` invoked &rarr; `handle_http` bootstraps request, returns  content &rarr; `respond` sends the response
 
 In the first line, we're sending the status code through the `send_response` method inherited from the `BaseHTTPRequestHandler`. 
 
