@@ -49,6 +49,9 @@ class Server(BaseHTTPRequestHandler):
         
         self.end_headers()
 
+        if isinstance( content, (bytes, bytearray) ):
+            return content
+
         return bytes(content, 'UTF-8')
         
     def respond(self, opts):
