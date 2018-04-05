@@ -10,7 +10,7 @@ Throughout this tutorial, we'll go through a few different steps, the first of w
 
 A basic understanding of Python3's syntax and OOP components will help you through this tutorial. Components important to the server will be explained as we move through, but basic syntax will not be explained. 
 
-The full source code is available on Git, with the appropriate versions tagged. Today's version is tagged as "basic-webserver."
+The full source code is available on Git, with the appropriate versions tagged. Today's version is tagged as "v1-webserver".
 
 Let's dive right in.
 
@@ -63,21 +63,40 @@ if __name__ == '__main__':
 ```
 First, we're importing the necessary packages that we'll be using in this file:
 
+```python
+import time
+from http.server import HTTPServer
+from server import Server
+```
+
 The `time` package simply writes timestamps for when our server goes up or down.
 The `http.server` package contains the HTTP server boilerplate from the Python3 standard library. We're importing a single module from this - `HTTPServer`.
 The `server` module is the other file we'll be filling out here in a moment, as of now, it's going to show an error for the improper import. We're importing a single class, `Server` from our module.
 
 Next, we define two constants we'll be using when we launch the server:
 
+```python
+HOST_NAME = 'localhost'
+PORT_NUMBER = 8000
+```
+
 `HOST_NAME=localhost` which will launch our server on our localhost and `PORT_NUMBER=8000` which is the port we want it to run on (feel free to change this port if your 8000 is occupied).
 
 Next up, we have the boilerplate for running our server. The first line `if __name__ == '__main__':` is assuring that we ran this file specifically. If that's the case, we'll execute the rest of the code.
 
-Next, we create the HTTP object by passing the following parameters to the `HTTPServer` object that we imported earlier:
+Next, we create the HTTP object:
+```python
+httpd = HTTPServer((HOST_NAME, PORT_NUMBER), Server)
+```
+We pass the following parameters to the `HTTPServer` object that we imported earlier:
 - We pass a tuple containing the `HOST_NAME` and `PORT_NUMBER`
 - As a second argument, we pass the server handling class `Server`, imported from our own file, that we'll fill out in a moment
 
 The next line simply prints our "Server UP" with the timestamp to the console. We're using the Python string formatting operator to pass in the constants as well.
+
+```python
+print(time.asctime(), 'Server Starts - %s:%s' % (HOST_NAME, PORT_NUMBER))
+```
 
 This next block actually starts up the server and runs it:
 
@@ -92,6 +111,10 @@ This next block actually starts up the server and runs it:
 This tells our created `httpd` object to serve until it receives a keyboard interrupt. Once that happens, it closes out the server connection with `httpd.server_close()`.
 
 Our last `print` line simply outputs a message when the server is closed.
+
+```python
+print(time.asctime(), 'Server Stops - %s:%s' % (HOST_NAME, PORT_NUMBER))
+```
 
 Next, let's set up our server handler.
 
@@ -119,7 +142,7 @@ class Server(BaseHTTPRequestHandler):
         return
 ```
 
-We'll be using these four basic methods to handle the responses. On our first line, we import the `BaseHTTPRequestHandler` from the `http.server` package. This is going to be the class that ours will subclass. There are some important things to note:
+We'll be using these methods to handle the responses. On our first line, we import the `BaseHTTPRequestHandler` from the `http.server` package. This is going to be the class that ours will subclass. There are some important things to note:
 
 - When a request comes in, the BaseHTTPRequestHandler will automatically route the request to the appropriate request method (either `do_GET` or `do_POST`) which we've defined on our subclass
 

@@ -1,7 +1,4 @@
 #!/usr/bin/env python3
-
-import os
-import sys
 import time
 from http.server import HTTPServer
 from server import Server
