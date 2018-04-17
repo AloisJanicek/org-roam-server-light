@@ -4,6 +4,7 @@ from http.server import BaseHTTPRequestHandler
 
 from routes.main import routes
 
+from response.staticHandler import StaticHandler
 from response.templateHandler import TemplateHandler
 from response.badRequestHandler import BadRequestHandler
 
@@ -22,10 +23,12 @@ class Server(BaseHTTPRequestHandler):
                 handler.find(routes[self.path])
             else:
                 handler = BadRequestHandler()
-
-        else:
+        elif request_extension is ".py":
             handler = BadRequestHandler()
-
+        else:
+            handler = StaticHandler()
+            handler.find(self.path)
+ 
         self.respond({
             'handler': handler
         })
