@@ -46,8 +46,11 @@ class Server(BaseHTTPRequestHandler):
 
         self.end_headers()
 
-        return bytes(content, 'UTF-8')
-
+        if isinstance(content, bytes):
+            return content
+        else:
+            return bytes(content, 'UTF-8')
+            
     def respond(self, opts):
         response = self.handle_http(opts['handler'])
         self.wfile.write(response)
