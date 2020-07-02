@@ -7,7 +7,7 @@ This projects attempts to move [[https://github.com/org-roam/org-roam-server][or
 ** Warning
 My first time touching python more deeply then Hello World!
 
-** TODO Installation
+** Installation
 #+BEGIN_EXAMPLE
  git clone https://github.com/AloisJanicek/org-roam-server-light.git
 #+END_EXAMPLE
@@ -62,11 +62,11 @@ Add elisp code into your emacs config
 Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-mode= or just enable it by ~M-x~
 
 ** Roadmap and functionality overview
-*** DONE Serve all kinds of static assets
-*** DONE Keep track of current buffer
+*** DONE +Serve all kinds of static assets+
+*** DONE +Keep track of current buffer+
 by writing its name into file and reading it by external server process
 performs better then fetching value of emacs variable via emacsclient every second and it is easier to program then Unix socket or D-Bus
-*** DONE Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs
+*** DONE +Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs+
 *** TODO Actually construct required JSON for vis-network in Python
 For now I am using dummy  =query.json=  file placed in project root where the content of the file is identical to what is served by =roam-data= servlet from =org-roam-server=
 *** TODO Handle file previews
