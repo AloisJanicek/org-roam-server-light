@@ -67,8 +67,7 @@ by writing its name into file and reading it by external server process
 performs better then fetching value of emacs variable via emacsclient every second and it is easier to program then Unix socket or D-Bus
 *** DONE Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs
 *** TODO Actually construct required JSON for vis-network in Python
-Currently file called =query.json= placed in project root is required, so this whole thing isn't useful yet
-=query.json= is the copy of what =roam-data= servlet from =org-roam-server= serves
+For now I am using dummy  =query.json=  file placed in project root where the content of the file is identical to what is served by =roam-data= servlet from =org-roam-server=
 *** TODO Handle file previews
 
 ** Credits
