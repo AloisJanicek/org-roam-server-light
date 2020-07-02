@@ -8,8 +8,9 @@ This projects attempts to move [[https://github.com/org-roam/org-roam-server][or
 My first time touching python more deeply then Hello World!
 
 ** TODO Installation
-
-For now, =git clone= and run =python main.py= from project root directory
+#+BEGIN_EXAMPLE
+ git clone https://github.com/AloisJanicek/org-roam-server-light.git
+#+END_EXAMPLE
 
 Add elisp code into your emacs config
 
