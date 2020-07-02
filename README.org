@@ -38,20 +38,23 @@ Add elisp code into your emacs config
     (aj-org-roam-server-light-update-last-buffer)))
 
 (define-minor-mode org-roam-server-light-mode
-  "Start the http server and serve org-roam files."
-  :lighter ""
-  :global t
-  :init-value nil
-  (if (not (ignore-errors org-roam-server-light-mode))
-      (progn
-        ;; TODO start external server process
-        (remove-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil)
-        (dolist (buf (org-roam--get-roam-buffers))
-          (with-current-buffer buf
-            (remove-hook 'post-command-hook #'aj-org-roam-server-light-update-last-buffer t))))
-    (progn
-      ;; TODO stop external server process
-      (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil))))
+    "Start the http server and serve org-roam files."
+    :lighter ""
+    :global t
+    :init-value nil
+    (let ((process-title "org-roam-server-light"))
+      (if (not (ignore-errors org-roam-server-light-mode))
+          (progn
+            (when (get-process process-title)
+              (delete-process "org-roam-server-light"))
+            (remove-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil)
+            (dolist (buf (org-roam--get-roam-buffers))
+              (with-current-buffer buf
+                (remove-hook 'post-command-hook #'aj-org-roam-server-light-update-last-buffer t))))
+        (progn
+          (let ((default-directory "/path/to/this/repository/org-roam-server-light"))
+            (start-process-shell-command process-title "org-roam-server-light-output-buffer" "python main.py"))
+          (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil)))))
 
 #+END_SRC
 
@@ -62,7 +65,7 @@ Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-
 *** DONE Keep track of current buffer
 by writing its name into file and reading it by external server process
 performs better then fetching value of emacs variable via emacsclient every second and it is easier to program then Unix socket or D-Bus
-*** TODO Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs
+*** DONE Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs
 *** TODO Actually construct required JSON for vis-network in Python
 Currently file called =query.json= placed in project root is required, so this whole thing isn't useful yet
 =query.json= is the copy of what =roam-data= servlet from =org-roam-server= serves
