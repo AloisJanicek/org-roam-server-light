@@ -1,0 +1,73 @@
+#+TITLE: Readme
+
+* org-roam-server-light
+
+This projects attempts to move [[https://github.com/org-roam/org-roam-server][org-roam-server]] functionality from emacs into external python server process due to subjective poor elisp / emacs performance when computing graph data for larger amount of org-roam files and serving them to web browser.
+
+** Warning
+My first time touching python more deeply then Hello World!
+
+** TODO Installation
+
+For now, =git clone= and run =python main.py= from project root directory
+
+Add elisp code into your emacs config
+
+** Elisp code
+#+BEGIN_SRC emacs-lisp
+(require 'f)
+
+(defun aj-org-roam-server-light-update-last-buffer ()
+  "Update `aj-org-roam-server-light-last-roam-buffer'."
+  (let ((buf (or (buffer-base-buffer (current-buffer)) (current-buffer))))
+    (when (org-roam--org-roam-file-p
+           (buffer-file-name buf))
+      (setq aj-org-roam-server-light-last-roam-buffer (car (last
+                                                            (split-string
+                                                             (org-roam--path-to-slug
+                                                              (buffer-name buf))
+                                                             "/"))))
+      (f-write-text aj-org-roam-server-light-last-roam-buffer
+                    'utf-8
+                    (format "/tmp/%s" (symbol-name 'aj-org-roam-server-light-last-roam-buffer))))))
+
+(defun aj-org-roam-server-light-find-file-hook-function ()
+  "If the current visited file is an `org-roam` file, update the current buffer."
+  (when (org-roam--org-roam-file-p)
+    (add-hook 'post-command-hook #'aj-org-roam-server-light-update-last-buffer nil t)
+    (aj-org-roam-server-light-update-last-buffer)))
+
+(define-minor-mode org-roam-server-light-mode
+  "Start the http server and serve org-roam files."
+  :lighter ""
+  :global t
+  :init-value nil
+  (if (not (ignore-errors org-roam-server-light-mode))
+      (progn
+        ;; TODO start external server process
+        (remove-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil)
+        (dolist (buf (org-roam--get-roam-buffers))
+          (with-current-buffer buf
+            (remove-hook 'post-command-hook #'aj-org-roam-server-light-update-last-buffer t))))
+    (progn
+      ;; TODO stop external server process
+      (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil))))
+
+#+END_SRC
+
+Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-mode= or just enable it by ~M-x~
+
+** Roadmap and functionality overview
+*** DONE Serve all kinds of static assets
+*** DONE Keep track of current buffer
+by writing its name into file and reading it by external server process
+performs better then fetching value of emacs variable via emacsclient every second and it is easier to program then Unix socket or D-Bus
+*** TODO Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs
+*** TODO Actually construct required JSON for vis-network in Python
+Currently file called =query.json= placed in project root is required, so this whole thing isn't useful yet
+=query.json= is the copy of what =roam-data= servlet from =org-roam-server= serves
+*** TODO Handle file previews
+
+** Credits
+Client side code, assets and some elisp copied as they are from [[https://github.com/org-roam/org-roam-server][org-roam-server]]
+python code copied and expanded from [[https://github.com/aklatzke/python-webserver-part-2][aklatzke/python-webserver-part-2]]

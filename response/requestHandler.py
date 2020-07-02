@@ -1,8 +1,9 @@
-class MockFile():
+class MockFile:
     def read(self):
         return False
-        
-class RequestHandler():
+
+
+class RequestHandler:
     def __init__(self):
         self.contentType = ""
         self.contents = MockFile()
@@ -20,7 +21,7 @@ class RequestHandler():
         return self.status
 
     def getContentType(self):
-        return self.contentType 
+        return self.contentType
 
     def getType(self):
-        return 'static'
+        return "static"

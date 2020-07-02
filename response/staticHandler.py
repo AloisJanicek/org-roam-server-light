@@ -10,7 +10,8 @@ class StaticHandler(RequestHandler):
             ".css": "text/css",
             ".jpg": "image/jpeg",
             ".png": "image/png",
-            "notfound": "text/plain"
+            ".ico": "image/x-icon",
+            "notfound": "text/plain",
         }
 
     def find(self, file_path):
@@ -20,16 +21,16 @@ class StaticHandler(RequestHandler):
         try:
             print("public{}".format(file_path))
 
-            if extension in (".jpg", ".jpeg", ".png"):
-                self.contents = open("public{}".format(file_path), 'rb')
+            if extension in (".jpg", ".jpeg", ".png", ".ico"):
+                self.contents = open("public{}".format(file_path), "rb")
             else:
-                self.contents = open("public{}".format(file_path), 'r')
+                self.contents = open("public{}".format(file_path), "r")
 
             self.setContentType(extension)
             self.setStatus(200)
             return True
         except:
-            self.setContentType('notfound')
+            self.setContentType("notfound")
             self.setStatus(404)
             return False
 
