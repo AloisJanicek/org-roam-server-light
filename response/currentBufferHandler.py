@@ -3,20 +3,12 @@
 from response.requestHandler import RequestHandler
 
 
-def get_last_roam_buffer():
-    return (
-        open("/tmp/aj-org-roam-server-light-last-roam-buffer", "r")
-        .read()
-        .replace('"', "")
-        .rstrip()
-    )
-
-
 class CurrentBufferHandler(RequestHandler):
     def __init__(self):
         super().__init__()
         self.contentType = "text/event-stream"
-        self.contents = "data: " + get_last_roam_buffer() + "/n/n"
+        last_roam_buffer = open("/tmp/aj-org-roam-server-light-last-roam-buffer", "r")
+        self.contents = "data: " + last_roam_buffer.read() + "\n\n"
         self.setStatus(200)
 
     def getContents(self):
