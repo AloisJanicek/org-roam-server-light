@@ -17,7 +17,9 @@ def get_query_field(url, field):
         return []
 
 
-# get_query_field("/roam-data?force=1&token=null", "force")
+org_roam_directory = open("/tmp/org-roam-server-light/org-roam-directory", "r").read()
+
+org_roam_db = org_roam_directory + "/org-roam.db"
 
 
 class Server(BaseHTTPRequestHandler):
@@ -25,6 +27,7 @@ class Server(BaseHTTPRequestHandler):
         return
 
     def do_GET(self):
+        global org_roam_db
         split_path = os.path.splitext(self.path)
         request_extension = split_path[1]
 
@@ -33,7 +36,7 @@ class Server(BaseHTTPRequestHandler):
 
         elif "roam-data" in self.path:
             self.roam_force = get_query_field(self.path, "force")
-            handler = RoamDataHandler(self.roam_force)
+            handler = RoamDataHandler(self.roam_force, org_roam_db)
 
         elif "current-buffer-data" in self.path:
             handler = CurrentBufferHandler()
