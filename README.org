@@ -39,26 +39,30 @@ Add elisp code into your emacs config
     (aj-org-roam-server-light-update-last-buffer)))
 
 (define-minor-mode org-roam-server-light-mode
-    "Start the http server and serve org-roam files."
-    :lighter ""
-    :global t
-    :init-value nil
-    (let ((process-title "org-roam-server-light"))
-      (if (not (ignore-errors org-roam-server-light-mode))
-          (progn
-            (when (get-process process-title)
-              (delete-process "org-roam-server-light"))
-            (remove-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil)
-            (dolist (buf (org-roam--get-roam-buffers))
-              (with-current-buffer buf
-                (remove-hook 'post-command-hook #'aj-org-roam-server-light-update-last-buffer t))))
+  "Start the http server and serve org-roam files."
+  :lighter ""
+  :global t
+  :init-value nil
+  (let* ((title "org-roam-server-light")
+         (tmp-dir (concat "/tmp/" title)))
+    (if (not (ignore-errors org-roam-server-light-mode))
         (progn
-          (let ((default-directory "/path/to/your/org-roam-server-light"))
-            (start-process-shell-command process-title "org-roam-server-light-output-buffer" "python main.py"))
-          (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil)
-          (f-write-text org-roam-directory
-                        'utf-8
-                        (format "/tmp/org-roam-server-light/%s" (symbol-name 'org-roam-directory)))))))
+          (when (get-process title)
+            (delete-process title))
+          (remove-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil)
+          (dolist (buf (org-roam--get-roam-buffers))
+            (with-current-buffer buf
+              (remove-hook 'post-command-hook #'aj-org-roam-server-light-update-last-buffer t))))
+      (progn
+        (let ((default-directory "/path/to/your/org-roam-server-light"))
+          (start-process-shell-command "org-roam-server-light" "org-roam-server-light-output-buffer" "python main.py"))
+        (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil)
+        (unless (file-exists-p tmp-dir)
+          (make-directory tmp-dir))
+        (f-write-text org-roam-directory
+                      'utf-8
+                      (expand-file-name (symbol-name 'org-roam-directory) tmp-dir))))))
+
 #+END_SRC
 
 Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-mode= or just enable it by ~M-x~
@@ -70,7 +74,7 @@ by writing its name into file and reading it by external server process
 performs better then fetching value of emacs variable via emacsclient every second and it is easier to program then Unix socket or D-Bus
 *** COMPLETED +Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs+
 *** COMPLETED +Actually construct required JSON for vis-network in Python+
-*** TODO Handle file previews
+*** COMPLETED +Handle file previews+
 *** TODO Handle cite links stuff
 
 ** Credits
