@@ -30,7 +30,7 @@ Add elisp code into your emacs config
                                                              "/"))))
       (f-write-text aj-org-roam-server-light-last-roam-buffer
                     'utf-8
-                    (format "/tmp/%s" (symbol-name 'aj-org-roam-server-light-last-roam-buffer))))))
+                    (format "/tmp/org-roam-server-light/%s" (symbol-name 'aj-org-roam-server-light-last-roam-buffer))))))
 
 (defun aj-org-roam-server-light-find-file-hook-function ()
   "If the current visited file is an `org-roam` file, update the current buffer."
@@ -58,7 +58,7 @@ Add elisp code into your emacs config
           (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil)
           (f-write-text org-roam-directory
                         'utf-8
-                        (format "/tmp/%s" (symbol-name 'org-roam-directory)))))))
+                        (format "/tmp/org-roam-server-light/%s" (symbol-name 'org-roam-directory)))))))
 #+END_SRC
 
 Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-mode= or just enable it by ~M-x~

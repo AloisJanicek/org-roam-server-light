@@ -7,7 +7,7 @@ import urllib.parse
 from response.requestHandler import RequestHandler
 
 
-org_roam_directory = open("/tmp/org-roam-directory", "r").read()
+org_roam_directory = open("/tmp/org-roam-server-light/org-roam-directory", "r").read()
 
 org_roam_db = org_roam_directory + "/org-roam.db"
 
