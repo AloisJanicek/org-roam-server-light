@@ -75,6 +75,8 @@ performs better then fetching value of emacs variable via emacsclient every seco
 *** COMPLETED +Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs+
 *** COMPLETED +Actually construct required JSON for vis-network in Python+
 *** COMPLETED +Handle file previews+
+*** TODO Fix href stuff for links in file preview
+    so use can use them to navigate files as expected
 *** TODO Handle cite links stuff
 
 ** Credits
