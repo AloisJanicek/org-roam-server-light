@@ -8,6 +8,7 @@ from response.badRequestHandler import BadRequestHandler
 from response.roamDataHandler import RoamDataHandler
 from response.networkVisHandler import NetworkVisHandler
 from response.currentBufferHandler import CurrentBufferHandler
+from response.filePreviewHandler import FilePreviewHandler
 
 
 def get_query_field(url, field):
@@ -28,10 +29,17 @@ class Server(BaseHTTPRequestHandler):
 
     def do_GET(self):
         global org_roam_db
-        split_path = os.path.splitext(self.path)
-        request_extension = split_path[1]
 
-        if "network-vis-options" in self.path:
+        requested_file = os.path.basename(urlparse(self.path)[2])
+        requested_extension = os.path.splitext(requested_file)[1]
+        requested_filename = requested_file.rstrip(requested_extension)
+
+        to_be_exported_file = org_roam_directory + "/" + requested_filename + ".org"
+
+        if os.path.isfile(to_be_exported_file):
+            handler = FilePreviewHandler(to_be_exported_file)
+
+        elif "network-vis-options" in self.path:
             handler = NetworkVisHandler()
 
         elif "roam-data" in self.path:
@@ -41,13 +49,14 @@ class Server(BaseHTTPRequestHandler):
         elif "current-buffer-data" in self.path:
             handler = CurrentBufferHandler()
 
-        elif request_extension == "" or request_extension == ".html":
+        elif requested_extension == "" or requested_extension == ".html":
             if self.path in routes:
                 handler = TemplateHandler()
                 handler.find(routes[self.path])
             else:
                 handler = BadRequestHandler()
-        elif request_extension == ".py":
+
+        elif requested_extension == ".py":
             handler = BadRequestHandler()
         else:
             handler = StaticHandler()
