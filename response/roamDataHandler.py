@@ -7,9 +7,7 @@ import urllib.parse
 from response.requestHandler import RequestHandler
 
 
-org_roam_directory = (
-    os.popen("emacsclient -e org-roam-directory").read().replace('"', "").rstrip()
-)
+org_roam_directory = open("/tmp/org-roam-directory", "r").read()
 
 org_roam_db = org_roam_directory + "/org-roam.db"
 

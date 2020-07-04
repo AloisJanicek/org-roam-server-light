@@ -53,10 +53,12 @@ Add elisp code into your emacs config
               (with-current-buffer buf
                 (remove-hook 'post-command-hook #'aj-org-roam-server-light-update-last-buffer t))))
         (progn
-          (let ((default-directory "/path/to/this/repository/org-roam-server-light"))
+          (let ((default-directory (expand-file-name "org-roam-server-light" aj-repos-dir)))
             (start-process-shell-command process-title "org-roam-server-light-output-buffer" "python main.py"))
-          (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil)))))
-
+          (add-hook 'find-file-hook #'aj-org-roam-server-light-find-file-hook-function nil nil)
+          (f-write-text org-roam-directory
+                        'utf-8
+                        (format "/tmp/%s" (symbol-name 'org-roam-directory)))))))
 #+END_SRC
 
 Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-mode= or just enable it by ~M-x~
