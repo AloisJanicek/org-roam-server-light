@@ -6,26 +6,29 @@ import sqlite3
 import urllib.parse
 from response.requestHandler import RequestHandler
 
-previous_results = ""
+previous_db_mtime = 0
 
 
 class RoamDataHandler(RequestHandler):
     def __init__(self, roam_force, org_roam_db):
         super().__init__()
-        global previous_results
+        global previous_db_mtime
+
         self.org_roam_db = org_roam_db
         self.contentType = "text/event-stream"
+
         if len(roam_force) > 0:
             is_force = roam_force[0]
         else:
             is_force = False
 
-        new_results = self.roam_server_data()
-        if previous_results == new_results and not is_force:
+        current_db_mtime = os.path.getmtime(org_roam_db)
+
+        if current_db_mtime == previous_db_mtime and not is_force:
             self.contents = ""
         else:
-            previous_results = new_results
-            self.contents = "data: " + new_results + "\n\n"
+            self.contents = "data: " + self.roam_server_data() + "\n\n"
+            previous_db_mtime = current_db_mtime
 
         self.setStatus(200)
 
