@@ -30,6 +30,7 @@ class FilePreviewHandler(RequestHandler):
                 <meta charset="utf-8">
                 </head>
                 <body>
+                <br>
                 """
                 + body
                 + """
