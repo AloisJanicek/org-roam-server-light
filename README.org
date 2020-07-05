@@ -70,13 +70,10 @@ Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-
 ** Roadmap and functionality overview
 *** COMPLETED +Serve all kinds of static assets+
 *** COMPLETED +Keep track of current buffer+
-by writing its name into file and reading it by external server process
-performs better then fetching value of emacs variable via emacsclient every second and it is easier to program then Unix socket or D-Bus
 *** COMPLETED +Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs+
 *** COMPLETED +Actually construct required JSON for vis-network in Python+
 *** COMPLETED +Handle file previews+
-*** TODO Fix href stuff for links in file preview
-    so use can use them to navigate files as expected
+*** COMPLETED +Fix href stuff for links in file preview+
 *** TODO Handle cite links stuff
 
 ** Credits

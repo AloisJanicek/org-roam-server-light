@@ -7,9 +7,9 @@ class FilePreviewHandler(RequestHandler):
         super().__init__()
         self.contentType = "text/html"
 
-        export_dir = "/tmp/org-roam-server-light/"
-        filename = os.path.basename(to_be_exported_file).rstrip(".org")
-        exported_file = export_dir + filename + ".html"
+        self.export_dir = "/tmp/org-roam-server-light/"
+        self.filename = os.path.basename(to_be_exported_file).rstrip(".org")
+        self.exported_file = self.export_dir + self.filename + ".html"
         os.system(
             "pandoc "
             + to_be_exported_file
@@ -17,9 +17,9 @@ class FilePreviewHandler(RequestHandler):
             + "-f org "
             + "-t html "
             + "-o "
-            + exported_file
+            + self.exported_file
         )
-        with open(exported_file, "r+") as f:
+        with open(self.exported_file, "r+") as f:
             body = f.read()
             f.seek(0)
             f.write(
@@ -37,5 +37,16 @@ class FilePreviewHandler(RequestHandler):
                 </html>
                 """
             )
-        self.contents = open(exported_file)
+
+        self.fix_href()
+        self.contents = open(self.exported_file)
         self.setStatus(200)
+
+    def fix_href(self):
+        f = open(self.exported_file, "r")
+        d = f.read()
+        d = d.replace('.org">', '.html">')
+        f.close()
+        f = open(self.exported_file, "w")
+        f.write(d)
+        f.close()
