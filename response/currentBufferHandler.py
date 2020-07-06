@@ -4,18 +4,29 @@ import os.path
 from response.requestHandler import RequestHandler
 
 
+last_roam_buffer_file = (
+    "/tmp/org-roam-server-light/aj-org-roam-server-light-last-roam-buffer"
+)
+previous_mtime = 1
+
+
 class CurrentBufferHandler(RequestHandler):
     def __init__(self):
         super().__init__()
+        global last_roam_buffer_file
+        global previous_mtime
+
         self.contentType = "text/event-stream"
-        last_roam_buffer_file = (
-            "/tmp/org-roam-server-light/aj-org-roam-server-light-last-roam-buffer"
-        )
+
         if os.path.isfile(last_roam_buffer_file):
-            last_roam_buffer = open(last_roam_buffer_file, "r").read()
-            self.contents = "data: " + last_roam_buffer + "\n\n"
-        else:
-            self.contents = ""
+            current_mtime = os.path.getmtime(last_roam_buffer_file)
+            if current_mtime == previous_mtime:
+                self.contents = ""
+            else:
+                last_roam_buffer = open(last_roam_buffer_file, "r").read()
+                self.contents = "data: " + last_roam_buffer + "\n\n"
+                previous_mtime = current_mtime
+                print("it was not equal: " + str(previous_mtime))
         self.setStatus(200)
 
     def getContents(self):
