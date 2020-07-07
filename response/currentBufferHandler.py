@@ -26,7 +26,8 @@ class CurrentBufferHandler(RequestHandler):
                 last_roam_buffer = open(last_roam_buffer_file, "r").read()
                 self.contents = "data: " + last_roam_buffer + "\n\n"
                 previous_mtime = current_mtime
-                print("it was not equal: " + str(previous_mtime))
+        else:
+            self.contents = ""
         self.setStatus(200)
 
     def getContents(self):
