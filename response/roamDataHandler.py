@@ -43,7 +43,7 @@ class RoamDataHandler(RequestHandler):
 
         c = conn.cursor()
 
-        node_query = """SELECT titles.file,titles,tags
+        node_query = """SELECT titles.file,title,tags
                         FROM titles
                         LEFT OUTER JOIN tags
                         ON titles.file = tags.file"""
@@ -54,7 +54,7 @@ class RoamDataHandler(RequestHandler):
             d = {}
             path = node[0].strip('"')
             d["id"] = os.path.splitext(os.path.basename(path))[0]
-            title = node[1].rstrip(')"').lstrip('("')
+            title = node[1].strip('"')
             d["title"] = title
             d["tags"] = node[2]
             d["label"] = title
