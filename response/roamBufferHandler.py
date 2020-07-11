@@ -60,7 +60,7 @@ class RoamBufferHandler(RequestHandler):
         for item in results:
             file_title = item[1].strip('"')
             file_id = os.path.basename(item[0])
-            file_backlinks_str = item[3][item[3].index('"[') : item[3].index(']"') + 2]
+            file_backlinks = item[3].split("[[file:")
             backlinks_html = (
                 '<div class="outline-3">'
                 + "<h3>"
@@ -72,13 +72,18 @@ class RoamBufferHandler(RequestHandler):
                 + "</h3>"
                 + '<div class="outline-text-3"><p>'
             )
-            for backlink_str in file_backlinks_str.split(", "):
-                backlink_list = (
-                    backlink_str.rstrip(']]"').lstrip('"[[file:').split("][")
-                )
-                backlink_id = os.path.basename(backlink_list[0])
-                backlink_title = os.path.basename(backlink_list[1])
-                # add it somewhere
+            for backlink_str in file_backlinks:
+                print("backlink: \n")
+                print(backlink_str)
+
+                try:
+                    backlink_str[0 : backlink_str.index("]]")]
+                except Exception:
+                    continue
+
+                backlink_str = backlink_str[0 : backlink_str.index("]]")].split("][")
+                backlink_id = os.path.basename(backlink_str[0])
+                backlink_title = backlink_str[1]
                 backlinks_html = (
                     backlinks_html
                     + '<a name="backlink" id="/'
@@ -86,10 +91,9 @@ class RoamBufferHandler(RequestHandler):
                     + '" href="javascript:void(0)">'
                     + backlink_title
                     + "</a>"
+                    + " "
                 )
-            # add it somewhere
             backlinks_html = backlinks_html + "</p></div></div>"
             html = html + backlinks_html
-        # add it somewhere
 
         return html
