@@ -73,8 +73,6 @@ class RoamBufferHandler(RequestHandler):
                 + '<div class="outline-text-3"><p>'
             )
             for backlink_str in file_backlinks:
-                print("backlink: \n")
-                print(backlink_str)
 
                 try:
                     backlink_str[0 : backlink_str.index("]]")]
