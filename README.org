@@ -74,9 +74,7 @@ Execute =(org-roam-server-light-mode 'toggle)= to toggle =org-roam-server-light-
 *** COMPLETED +Actually construct required JSON for vis-network in Python+
 *** COMPLETED +Handle file previews+
 *** COMPLETED +Fix href stuff for links in file preview+
-*** TODO Handle =/org-roam-buffer=
-- it has =path= , =label= and =token= keys
-- for given filepath I need to get /title/, /citelinks/ and /backlinks/ and combine them into one =html= file and return content of that file
+*** COMPLETED +Handle /org-roam-buffer+
 
 
 ** Credits
