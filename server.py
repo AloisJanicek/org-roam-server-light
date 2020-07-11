@@ -9,6 +9,7 @@ from response.roamDataHandler import RoamDataHandler
 from response.networkVisHandler import NetworkVisHandler
 from response.currentBufferHandler import CurrentBufferHandler
 from response.filePreviewHandler import FilePreviewHandler
+from response.roamBufferHandler import RoamBufferHandler
 
 
 def get_query_field(url, field):
@@ -48,6 +49,11 @@ class Server(BaseHTTPRequestHandler):
 
         elif "current-buffer-data" in self.path:
             handler = CurrentBufferHandler()
+
+        elif "org-roam-buffer" in self.path:
+            file_path = get_query_field(self.path, "path")
+            file_label = get_query_field(self.path, "label")
+            handler = RoamBufferHandler(org_roam_db, file_path, file_label)
 
         elif requested_extension == "" or requested_extension == ".html":
             if self.path in routes:
