@@ -84,7 +84,7 @@ class RoamBufferHandler(RequestHandler):
                 backlink_title = backlink_str[1]
                 backlinks_html = (
                     backlinks_html
-                    + '<a name="backlink" id="/'
+                    + '<a name="backlink" id="'
                     + backlink_id
                     + '" href="javascript:void(0)">'
                     + backlink_title
