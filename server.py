@@ -37,7 +37,7 @@ class Server(BaseHTTPRequestHandler):
         to_be_exported_file = org_roam_directory + "/" + requested_filename + ".org"
 
         if os.path.isfile(to_be_exported_file):
-            handler = FilePreviewHandler(to_be_exported_file)
+            handler = FilePreviewHandler(to_be_exported_file, org_roam_db)
 
         elif "network-vis-options" in self.path:
             handler = NetworkVisHandler()
