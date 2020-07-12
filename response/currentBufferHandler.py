@@ -5,7 +5,7 @@ from response.requestHandler import RequestHandler
 
 
 last_roam_buffer_file = (
-    "/tmp/org-roam-server-light/aj-org-roam-server-light-last-roam-buffer"
+    "/tmp/org-roam-server-light/org-roam-server-light-last-roam-buffer"
 )
 previous_mtime = 1
 
