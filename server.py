@@ -21,7 +21,7 @@ def get_query_field(url, field):
 
 org_roam_directory = open("/tmp/org-roam-server-light/org-roam-directory", "r").read()
 
-org_roam_db = org_roam_directory + "/org-roam.db"
+org_roam_db = open("/tmp/org-roam-server-light/org-roam-db-location", "r").read()
 
 
 class Server(BaseHTTPRequestHandler):
