@@ -1,11 +1,17 @@
 #+TITLE: Readme
 
 * org-roam-server-light
+This project is NOT part of official [[https://www.orgroam.com/][Org-roam]] project.
+This project started as personal experiment, proof-of-concept and doesn't aspire to become something more then that.
+It however uses "org-roam(-server)" name but does it out of good intentions:
+1. to make this little experiment easier to find
+2. to make the purpose of this project clear
 
-This projects attempts to move [[https://github.com/org-roam/org-roam-server][org-roam-server]] functionality from emacs into external python server process due to subjective poor elisp / emacs performance when computing graph data for larger amount of org-roam files and serving them to web browser.
+=org-roam-server-light= attempts to move [[https://github.com/org-roam/org-roam-server][org-roam-server]] functionality from emacs into external python server process due to subjective poor elisp / emacs performance when computing graph data for larger amount of org-roam files and serving them to web browser.
 
-** Warning
-My first time touching python more deeply then Hello World!
+** Credits
+Client side code, assets and some elisp copied as they are from [[https://github.com/org-roam/org-roam-server][org-roam-server]]
+python code copied and expanded from [[https://github.com/aklatzke/python-webserver-part-2][aklatzke/python-webserver-part-2]]
 
 ** Prerequisites
 File-preview functionality requires [[https://pandoc.org/][pandoc]] being available in your PATH
@@ -100,6 +106,3 @@ Running =org-roam-server-light-mode= will start org-roam-server-light server on 
 *** TODO Improve appearance of roam-buffer and file-preview panes
 
 
-** Credits
-Client side code, assets and some elisp copied as they are from [[https://github.com/org-roam/org-roam-server][org-roam-server]]
-python code copied and expanded from [[https://github.com/aklatzke/python-webserver-part-2][aklatzke/python-webserver-part-2]]
