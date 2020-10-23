@@ -11,17 +11,15 @@ from response.currentBufferHandler import CurrentBufferHandler
 from response.filePreviewHandler import FilePreviewHandler
 from response.roamBufferHandler import RoamBufferHandler
 
+from variables import org_roam_directory
+from variables import org_roam_db
+
 
 def get_query_field(url, field):
     try:
         return parse_qs(urlparse(url).query)[field]
     except KeyError:
         return []
-
-
-org_roam_directory = open("/tmp/org-roam-server-light/org-roam-directory", "r").read()
-
-org_roam_db = open("/tmp/org-roam-server-light/org-roam-db-location", "r").read()
 
 
 class Server(BaseHTTPRequestHandler):

@@ -1,6 +1,7 @@
 import os
 import sqlite3
 from response.requestHandler import RequestHandler
+from variables import org_roam_server_light_tmp_dir
 
 
 class FilePreviewHandler(RequestHandler):
@@ -8,7 +9,7 @@ class FilePreviewHandler(RequestHandler):
         super().__init__()
         self.contentType = "text/html"
         self.to_be_exported_file = to_be_exported_file
-        self.export_dir = "/tmp/org-roam-server-light/"
+        self.export_dir = org_roam_server_light_tmp_dir
         self.org_roam_db = org_roam_db
         self.filename = os.path.basename(to_be_exported_file).rstrip(".org")
         self.exported_file = self.export_dir + self.filename + ".html"

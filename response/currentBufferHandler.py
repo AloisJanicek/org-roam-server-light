@@ -2,11 +2,14 @@
 
 import os.path
 from response.requestHandler import RequestHandler
-
+from variables import org_roam_server_light_tmp_dir
 
 last_roam_buffer_file = (
-    "/tmp/org-roam-server-light/org-roam-server-light-last-roam-buffer"
+    org_roam_server_light_tmp_dir
+    /
+    "org-roam-server-light-last-roam-buffer"
 )
+
 previous_mtime = 1
 
 
