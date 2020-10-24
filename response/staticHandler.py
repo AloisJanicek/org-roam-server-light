@@ -24,7 +24,8 @@ class StaticHandler(RequestHandler):
             if extension in (".jpg", ".jpeg", ".png", ".ico"):
                 self.contents = open("public{}".format(file_path), "rb")
             else:
-                self.contents = open("public{}".format(file_path), "r")
+                self.contents = open("public{}".format(
+                    file_path), "r", encoding="utf8")
 
             self.setContentType(extension)
             self.setStatus(200)
