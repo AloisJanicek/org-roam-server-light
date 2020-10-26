@@ -12,7 +12,8 @@ class FilePreviewHandler(RequestHandler):
         self.export_dir = org_roam_server_light_tmp_dir
         self.org_roam_db = org_roam_db
         self.filename = os.path.basename(to_be_exported_file).rstrip(".org")
-        self.exported_file = self.export_dir + self.filename + ".html"
+        self.exported_file = os.path.join(
+            self.export_dir, self.filename+".html")
         os.system(
             "pandoc "
             + to_be_exported_file
@@ -22,7 +23,7 @@ class FilePreviewHandler(RequestHandler):
             + "-o "
             + self.exported_file
         )
-        with open(self.exported_file, "r+") as f:
+        with open(self.exported_file, "r+", encoding="utf8") as f:
             body = f.read()
             f.seek(0)
             f.write(
