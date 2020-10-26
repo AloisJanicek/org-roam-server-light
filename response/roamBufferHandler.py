@@ -75,11 +75,12 @@ class RoamBufferHandler(RequestHandler):
             for backlink_str in file_backlinks:
 
                 try:
-                    backlink_str[0 : backlink_str.index("]]")]
+                    backlink_str[0: backlink_str.index("]]")]
                 except Exception:
                     continue
 
-                backlink_str = backlink_str[0 : backlink_str.index("]]")].split("][")
+                backlink_str = backlink_str[0: backlink_str.index(
+                    "]]")].split("][")
                 backlink_id = os.path.basename(backlink_str[0])
                 backlink_title = backlink_str[1]
                 backlinks_html = (

@@ -58,7 +58,8 @@ class RoamDataHandler(RequestHandler):
             d["title"] = title
             d["tags"] = node[2]
             d["label"] = title
-            d["url"] = "org-protocol://roam-file?file=" + urllib.parse.quote_plus(path)
+            d["url"] = "org-protocol://roam-file?file=" + \
+                urllib.parse.quote_plus(path)
             d["path"] = path
             graph["nodes"].append(d)
 
