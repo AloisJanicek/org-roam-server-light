@@ -17,6 +17,10 @@ class RoamBufferHandler(RequestHandler):
             <html lang="en">
             <head>
             <meta charset="utf-8">
+            <style>
+            a {color: #0062CC;}
+            * {font-size: 1.1rem;}
+            </style>
             </head>
             <body>
             <br>

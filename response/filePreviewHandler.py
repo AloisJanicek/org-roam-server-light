@@ -32,6 +32,13 @@ class FilePreviewHandler(RequestHandler):
                 <html lang="en">
                 <head>
                 <meta charset="utf-8">
+                <style>
+                a {color: #0062CC;}
+                * {font-size: 1.1rem;}
+                body {
+                padding: 0.5rem 1rem;
+                }
+                </style>
                 </head>
                 <body>
                 <br>
