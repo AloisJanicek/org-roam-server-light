@@ -54,7 +54,7 @@ Add following elisp code into your emacs config and ensure that =org-roam-server
       (f-write-text
        org-roam-server-light-last-roam-buffer
        'utf-8
-       (format (concat org-roam-server-light-tmp-dir "org-roam-server-light-last-roam-buffer"))))))
+       (concat org-roam-server-light-tmp-dir "org-roam-server-light-last-roam-buffer")))))
 
 ;;;###autoload
 (defun org-roam-server-light-find-file-hook-function ()
