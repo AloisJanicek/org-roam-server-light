@@ -44,11 +44,11 @@ class RoamBufferHandler(RequestHandler):
         path_quoted = '"' + path[0] + '"'
         query = (
             """
-            SELECT [from], title, [to], [properties]
+            SELECT [source], title, [dest], [properties]
             FROM links
             LEFT OUTER JOIN titles
-            ON titles.file = [from]
-            WHERE [to] = '%s'
+            ON titles.file = [source]
+            WHERE [dest] = '%s'
             """
             % path_quoted
         )

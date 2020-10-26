@@ -63,9 +63,9 @@ class RoamDataHandler(RequestHandler):
             graph["nodes"].append(d)
 
         edges_query = """WITH selected AS (SELECT file FROM files)
-                        SELECT DISTINCT [from],[to]
+                        SELECT DISTINCT [source],[dest]
                         FROM links
-                        WHERE [to] IN selected AND [from] IN selected"""
+                        WHERE [dest] IN selected AND [source] IN selected"""
         c.execute(edges_query)
         edges = c.fetchall()
 
