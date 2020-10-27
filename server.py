@@ -32,7 +32,8 @@ class Server(BaseHTTPRequestHandler):
         requested_file = os.path.basename(urlparse(self.path)[2])
         requested_extension = os.path.splitext(requested_file)[1]
         requested_filename = os.path.splitext(requested_file)[0]
-        to_be_exported_file = org_roam_directory + "/" + requested_filename + ".org"
+        to_be_exported_file = os.path.join(
+            org_roam_directory, requested_filename + ".org")
 
         if os.path.isfile(to_be_exported_file):
             handler = FilePreviewHandler(to_be_exported_file, org_roam_db)
