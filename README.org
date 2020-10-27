@@ -70,7 +70,21 @@ Running =org-roam-server-light-mode= will start org-roam-server-light server on 
 *** COMPLETED +Handle file previews+
 *** COMPLETED +Fix href stuff for links in file preview+
 *** COMPLETED +Handle /org-roam-buffer+
-*** TODO Handle citelinks in roam-buffer pane
+*** COMPLETED +Move elisp code into its own file+
+*** COMPLETED Support custom visualization config
 *** TODO Improve appearance of roam-buffer and file-preview panes
+- add CREATED timestamp
+- add total count of backlinks
+*** TODO Allow to customize server URL
+*** TODO Implement items filtering [0/2]
+- [ ] elisp variables
+        export them on startup into file
+- [ ] servelet =default-filters application/json=
+        read the file with JSON data and serve it
 
+*** TODO Handle citelinks in roam-buffer pane
+*** TODO Properly review multi-platform file paths handling in python files
+*** TODO Consider some better solution for informatino exchange between emacs and python server
+with main objective of it being as much light on resources usage as possible
 
+currently this projects uses plain-text files for information exchange between emacs and python server

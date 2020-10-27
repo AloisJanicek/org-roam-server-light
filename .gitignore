@@ -8,3 +8,4 @@ tmp/
 build
 htmlcov
 .mypy_cache
+flycheck_*
