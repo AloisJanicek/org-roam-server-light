@@ -30,6 +30,17 @@ Add following elisp code into your emacs config and ensure that =org-roam-server
 (defvar org-roam-server-light-dir "~/org-roam-server-light"
   "Directory contenting org-roam-server-light repository.")
 
+(defvar org-roam-server-light-network-vis-options nil
+  "Options to be passed directly to vis.Network, in JSON format.
+e.g. (json-encode (list (cons 'physics (list (cons 'enabled json-false)))))
+or { \"physics\": { \"enabled\": false } }"
+  )
+
+;; Example of enabling 'to' arrows ->, for more see visjs.github.io/vis-network/docs/network
+(setq org-roam-server-light-network-vis-options
+      "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.5 } } } }"
+      )
+
 (defvar org-roam-server-light-tmp-dir
   (let ((dir-name "org-roam-server-light/"))
     (if (or IS-WINDOWS IS-MAC)
@@ -78,17 +89,21 @@ Add following elisp code into your emacs config and ensure that =org-roam-server
             (with-current-buffer buf
               (remove-hook 'post-command-hook #'org-roam-server-light-update-last-buffer t))))
       (progn
-        (let ((default-directory org-roam-server-light-dir))
-          (start-process-shell-command "org-roam-server-light" "org-roam-server-light-output-buffer" "python main.py"))
         (add-hook 'find-file-hook #'org-roam-server-light-find-file-hook-function nil nil)
         (unless (file-exists-p org-roam-server-light-tmp-dir)
           (make-directory org-roam-server-light-tmp-dir))
+        (f-write-text org-roam-server-light-network-vis-options
+                      'utf-8
+                      (expand-file-name "org-roam-server-light-network-vis-options" org-roam-server-light-tmp-dir))
         (f-write-text org-roam-db-location
                       'utf-8
                       (expand-file-name "org-roam-db-location" org-roam-server-light-tmp-dir))
         (f-write-text org-roam-directory
                       'utf-8
-                      (expand-file-name "org-roam-directory" org-roam-server-light-tmp-dir))))))
+                      (expand-file-name "org-roam-directory" org-roam-server-light-tmp-dir))
+        (let ((default-directory org-roam-server-light-dir))
+          (start-process-shell-command "org-roam-server-light" "org-roam-server-light-output-buffer" "python main.py")))
+      )))
 #+END_SRC
 
 ** Usage
