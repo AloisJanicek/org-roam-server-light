@@ -1,4 +1,5 @@
 import os
+import sqlite3
 from http.server import BaseHTTPRequestHandler
 from urllib.parse import parse_qs, urlparse
 from routes.main import routes
@@ -22,6 +23,25 @@ def get_query_field(url, field):
         return []
 
 
+def get_fullpath(to_be_exported_file):
+    conn = sqlite3.connect(org_roam_db)
+    c = conn.cursor()
+    path_quoted = '"%' + os.path.basename(to_be_exported_file) + '%"'
+    query = (
+        """
+        SELECT file
+        FROM files
+        WHERE file LIKE '%s'
+        """
+        % path_quoted
+    )
+    c.execute(query)
+    results = c.fetchall()
+    conn.close()
+    f = results[0][0].strip('"')
+    return f
+
+
 class Server(BaseHTTPRequestHandler):
     def do_HEAD(self):
         return
@@ -35,10 +55,7 @@ class Server(BaseHTTPRequestHandler):
         to_be_exported_file = os.path.join(
             org_roam_directory, requested_filename + ".org")
 
-        if os.path.isfile(to_be_exported_file):
-            handler = FilePreviewHandler(to_be_exported_file, org_roam_db)
-
-        elif "network-vis-options" in self.path:
+        if "network-vis-options" in self.path:
             handler = NetworkVisHandler()
 
         elif "roam-data" in self.path:
@@ -52,6 +69,17 @@ class Server(BaseHTTPRequestHandler):
             file_path = get_query_field(self.path, "path")
             file_label = get_query_field(self.path, "label")
             handler = RoamBufferHandler(org_roam_db, file_path, file_label)
+
+        elif (requested_file
+              and requested_extension == ".html"
+              and os.path.isfile(to_be_exported_file)):
+            handler = FilePreviewHandler(to_be_exported_file, org_roam_db)
+
+        elif (requested_file
+              and requested_extension == ".html"
+              and os.path.isfile(get_fullpath(to_be_exported_file))):
+            handler = FilePreviewHandler(
+                get_fullpath(to_be_exported_file), org_roam_db)
 
         elif requested_extension == "" or requested_extension == ".html":
             if self.path in routes:
