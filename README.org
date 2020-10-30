@@ -62,29 +62,28 @@ or if you are using other emacs
 ** Usage
 Running =org-roam-server-light-mode= will start org-roam-server-light server on http://localhost:8080
 
-** Roadmap and functionality overview
-*** COMPLETED +Serve all kinds of static assets+
-*** COMPLETED +Keep track of current buffer+
-*** COMPLETED +Start and stop external python server process when you enable or disable org-roam-server-light-mode in emacs+
-*** COMPLETED +Actually construct required JSON for vis-network in Python+
-*** COMPLETED +Handle file previews+
-*** COMPLETED +Fix href stuff for links in file preview+
-*** COMPLETED +Handle /org-roam-buffer+
-*** COMPLETED +Move elisp code into its own file+
-*** COMPLETED Support custom visualization config
-*** TODO Improve appearance of roam-buffer and file-preview panes
-- add CREATED timestamp
-- add total count of backlinks
-*** TODO Allow to customize server URL
-*** TODO Implement items filtering [0/2]
-- [ ] elisp variables
-        export them on startup into file
-- [ ] servelet =default-filters application/json=
-        read the file with JSON data and serve it
-
-*** TODO Handle citelinks in roam-buffer pane
-*** TODO Properly review multi-platform file paths handling in python files
-*** TODO Consider some better solution for informatino exchange between emacs and python server
-with main objective of it being as much light on resources usage as possible
-
-currently this projects uses plain-text files for information exchange between emacs and python server
+** TODO Roadmap and functionality overview
+- [X] start/stop python web-server when enable/disable major mode in emacs
+- [X] build and serve JSON data based on =org-roam.db= for vis.Network
+- [X] org-roam-buffer sidepane (basic)
+- [ ] improve org-roam-buffer sidepane
+  - add total count of backlinks
+- [X] keep track of current buffer
+- [X] file previews (basic)
+- [ ] improve file previews
+  - add CREATED timestamp (?)
+- [ ] serve (certain) files linked from exported files
+- [ ] serve inline images
+- [ ] mark last captured file as current buffer
+- [ ] handle citation backlinks in org-roam-buffer sidepane
+- [X] serve custom JSON config for vis.Network
+- [ ] ability to customize server url/port via elisp variable
+- [ ] ability to CSS for web app via elisp variable
+- [ ] ability to customize CSS for exported files via elisp-variable
+- [-] filter items by org-roam tag in web app and ability to set default whitelist/blacklist
+  - =org-roam-server-light-default-include-filters=
+  - =org-roam-server-light-default-exclude-filters=
+- [ ] review path handling in python code
+- [ ] review exported files encoding issues on Windows (cp-1252 vs unicode weirdness)
+- [ ] review mechanism of sharing data between emacs and python web-server
+  currently emacs writes data as text to plain-text files for python web-server to read it
