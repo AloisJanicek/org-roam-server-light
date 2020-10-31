@@ -57,6 +57,25 @@ or { \"physics\": { \"enabled\": false } }"
   :group 'org-roam-server-light
   :type 'string)
 
+(defcustom org-roam-server-light-default-include-filters "null"
+  "Options to set default include filters, in JSON format.
+e.g. (json-encode (list (list (cons 'id \"test\") (cons 'parent \"tags\"))))
+or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
+  :group 'org-roam-server-light
+  :type 'string)
+
+(defcustom org-roam-server-light-default-exclude-filters "null"
+  "Options to set default exclude filters, in JSON format.
+e.g. (json-encode (list (list (cons 'id \"test\") (cons 'parent \"tags\"))))
+or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
+  :group 'org-roam-server-light
+  :type 'string)
+
+(defcustom org-roam-server-light-style nil
+  "The CSS that can be used to customize the application."
+  :group 'org-roam-server-light
+  :type 'string)
+
 (defcustom org-roam-server-light-tmp-dir
   (let ((dir-name "org-roam-server-light/"))
     (if (or IS-WINDOWS IS-MAC)
@@ -112,6 +131,15 @@ or { \"physics\": { \"enabled\": false } }"
         (f-write-text org-roam-server-light-network-vis-options
                       'utf-8
                       (expand-file-name "org-roam-server-light-network-vis-options" org-roam-server-light-tmp-dir))
+        (f-write-text org-roam-server-light-default-include-filters
+                      'utf-8
+                      (expand-file-name "org-roam-server-light-default-include-filters" org-roam-server-light-tmp-dir))
+        (f-write-text org-roam-server-light-default-exclude-filters
+                      'utf-8
+                      (expand-file-name "org-roam-server-light-default-exclude-filters" org-roam-server-light-tmp-dir))
+        (f-write-text org-roam-server-light-style
+                      'utf-8
+                      (expand-file-name "org-roam-server-light-style" org-roam-server-light-tmp-dir))
         (f-write-text org-roam-db-location
                       'utf-8
                       (expand-file-name "org-roam-db-location" org-roam-server-light-tmp-dir))

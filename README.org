@@ -47,12 +47,19 @@ or if you are using other emacs
 ;; .emacs.d/init.el
 
 (eval-after-load 'org-roam
-  ;; optionally customize vis.Network options
+  ;; OPTIONAL: customize some settings or leave them to their defaults
+  ;; enable arrows
   (setq org-roam-server-light-network-vis-options
         "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.5 } } } }"
+        ;; change background color of web application
+        org-roam-server-light-style "body.darkmode { background-color: #121212!important; }"
+        ;; set default set of excluded or included tags
+        ;; customize only the value of id, in this case "test" and "journal"
+        org-roam-server-light-default-include-filters "[{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
+        org-roam-server-light-default-exclude-filters "[{ \"id\": \"journal\", \"parent\" : \"tags\"  }]"
         )
 
-  ;; set the directory where you cloned this repository
+  ;; MANDATORY: path to your local copy of this repository
   (setq org-roam-server-light-dir "~/org-roam-server-light")
 
   ;; finally load the main elisp file
@@ -62,7 +69,7 @@ or if you are using other emacs
 ** Usage
 Running =org-roam-server-light-mode= will start org-roam-server-light server on http://localhost:8080
 
-** TODO Roadmap and functionality overview
+** TODO Roadmap and functionality overview [8/19]
 - [X] start/stop python web-server when enable/disable major mode in emacs
 - [X] build and serve JSON data based on =org-roam.db= for vis.Network
 - [X] org-roam-buffer sidepane (basic)
@@ -77,13 +84,14 @@ Running =org-roam-server-light-mode= will start org-roam-server-light server on 
 - [ ] mark last captured file as current buffer
 - [ ] handle citation backlinks in org-roam-buffer sidepane
 - [X] serve custom JSON config for vis.Network
+  =org-roam-server-light-network-vis-options=
 - [ ] ability to customize server url/port via elisp variable
-- [ ] ability to CSS for web app via elisp variable
+- [X] ability to customize CSS for web app via elisp variable
 - [ ] ability to customize CSS for exported files via elisp-variable
-- [-] filter items by org-roam tag in web app and ability to set default whitelist/blacklist
-  - =org-roam-server-light-default-include-filters=
-  - =org-roam-server-light-default-exclude-filters=
+- [X] filter items by org-roam tag in web app and ability to set default whitelist/blacklist
+  =org-roam-server-light-default-include-filters=
+  =org-roam-server-light-default-exclude-filters=
 - [ ] review path handling in python code
-- [ ] review exported files encoding issues on Windows (cp-1252 vs unicode weirdness)
+- [ ] review exported files encoding issues on Windows (cp-1252 vs utf-8 weirdness)
 - [ ] review mechanism of sharing data between emacs and python web-server
   currently emacs writes data as text to plain-text files for python web-server to read it

@@ -11,6 +11,8 @@ from response.networkVisHandler import NetworkVisHandler
 from response.currentBufferHandler import CurrentBufferHandler
 from response.filePreviewHandler import FilePreviewHandler
 from response.roamBufferHandler import RoamBufferHandler
+from response.defaultFiltersHandler import DefaultFiltersHandler
+from response.serverCSSHandler import ServerCSSHandler
 
 from variables import org_roam_directory
 from variables import org_roam_db
@@ -57,6 +59,12 @@ class Server(BaseHTTPRequestHandler):
 
         if "network-vis-options" in self.path:
             handler = NetworkVisHandler()
+
+        elif "default-filters" in self.path:
+            handler = DefaultFiltersHandler()
+
+        elif "server-css" in self.path:
+            handler = ServerCSSHandler()
 
         elif "roam-data" in self.path:
             self.roam_force = get_query_field(self.path, "force")
