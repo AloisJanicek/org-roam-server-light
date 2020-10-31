@@ -29,12 +29,19 @@ if you are using doom emacs
 ;; .doom.d/config.el
 
 (after! org-roam
-  ;; optionally customize vis.Network options
+  ;; OPTIONAL: customize some settings or leave them to their defaults
+  ;; enable arrows
   (setq org-roam-server-light-network-vis-options
         "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.5 } } } }"
+        ;; change background color of web application
+        org-roam-server-light-style "body.darkmode { background-color: #121212!important; }"
+        ;; set default set of excluded or included tags
+        ;; customize only the value of id, in this case "test" and "journal"
+        org-roam-server-light-default-include-filters "[{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
+        org-roam-server-light-default-exclude-filters "[{ \"id\": \"journal\", \"parent\" : \"tags\"  }]"
         )
 
-  ;; set the directory where you cloned this repository
+  ;; MANDATORY: path to your local copy of this repository
   (setq org-roam-server-light-dir "~/org-roam-server-light")
 
   ;; finally load the main elisp file
