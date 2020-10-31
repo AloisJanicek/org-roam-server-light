@@ -45,7 +45,7 @@
   "org-roam-server-light customizable variables."
   :group 'org-roam)
 
-(defcustom org-roam-server-light-dir "~/repos/org-roam-server-light"
+(defcustom org-roam-server-light-dir nil
   "Directory contenting org-roam-server-light repository."
   :group 'org-roam-server-light
   :type 'string)
