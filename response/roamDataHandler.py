@@ -56,7 +56,15 @@ class RoamDataHandler(RequestHandler):
             d["id"] = os.path.splitext(os.path.basename(path))[0]
             title = node[1].strip('"')
             d["title"] = title
-            d["tags"] = node[2]
+            if node[2]:
+                tags = node[2].rstrip(')').lstrip('(').split()
+                sanitized_tags = []
+                for tag in tags:
+                    sanitized_tag = tag.strip('"')
+                    sanitized_tags.append(sanitized_tag)
+                d["tags"] = sanitized_tags
+            else:
+                d["tags"] = node[2]
             d["label"] = title
             d["url"] = "org-protocol://roam-file?file=" + \
                 urllib.parse.quote_plus(path)
