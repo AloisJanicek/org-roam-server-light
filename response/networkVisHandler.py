@@ -21,14 +21,9 @@ class NetworkVisHandler(RequestHandler):
         if os.path.isfile(network_vis_options_file) and os.path.getsize(network_vis_options_file) > 0:
             network_vis_options = open(
                 network_vis_options_file, "r").read()
-            print('match: \n')
-            print(network_vis_options)
-            print('\n')
             self.contents = network_vis_options
-            print(self.contents)
         else:
             self.contents = "{}"
-            print('this MUST NOT never happen: \n')
 
         self.setStatus(200)
 
