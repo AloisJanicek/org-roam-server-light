@@ -147,7 +147,7 @@ or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
                       'utf-8
                       (expand-file-name "org-roam-directory" org-roam-server-light-tmp-dir))
         (let ((default-directory org-roam-server-light-dir))
-          (start-process-shell-command "org-roam-server-light" "org-roam-server-light-output-buffer" "python main.py"))))))
+          (start-process-shell-command "org-roam-server-light" "*org-roam-server-light-output-buffer*" "python main.py"))))))
 
 
 (provide 'org-roam-server-light)
