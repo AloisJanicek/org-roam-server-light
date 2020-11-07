@@ -69,7 +69,17 @@ class RoamDataHandler(RequestHandler):
             d["url"] = "org-protocol://roam-file?file=" + \
                 urllib.parse.quote_plus(path)
             d["path"] = path
-            graph["nodes"].append(d)
+
+            can_append = True
+            for item in graph["nodes"]:
+                if item["id"] == d["id"]:
+                    can_append = False
+                    break
+                else:
+                    pass
+
+            if can_append:
+                graph["nodes"].append(d)
 
         edges_query = """WITH selected AS (SELECT file FROM files)
                         SELECT DISTINCT [source],[dest]
