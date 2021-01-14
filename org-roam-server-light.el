@@ -149,8 +149,9 @@ or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
         (if (and (stringp org-roam-server-light-dir)
                  (file-writable-p org-roam-server-light-dir)
                  (file-readable-p (expand-file-name "main.py" org-roam-server-light-dir)))
-            (start-process-shell-command "org-roam-server-light" "*org-roam-server-light-output-buffer*" "python main.py")
-          (user-error "Looks like %s isn't valid org-roam-server-light-dir" default-directory))))))
+            (let ((default-directory org-roam-server-light-dir))
+              (start-process-shell-command "org-roam-server-light" "*org-roam-server-light-output-buffer*" "python main.py"))
+          (user-error "Looks like %s isn't valid org-roam-server-light-dir" org-roam-server-light-dir))))))
 
 (provide 'org-roam-server-light)
 ;;; org-roam-server-light.el ends here
