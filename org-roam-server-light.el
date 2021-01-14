@@ -50,7 +50,7 @@
   :group 'org-roam-server-light
   :type 'string)
 
-(defcustom org-roam-server-light-network-vis-options nil
+(defcustom org-roam-server-light-network-vis-options ""
   "Options to be passed directly to vis.Network, in JSON format.
 e.g. (json-encode (list (cons 'physics (list (cons 'enabled json-false)))))
 or { \"physics\": { \"enabled\": false } }"
@@ -71,7 +71,7 @@ or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
   :group 'org-roam-server-light
   :type 'string)
 
-(defcustom org-roam-server-light-style nil
+(defcustom org-roam-server-light-style ""
   "The CSS that can be used to customize the application."
   :group 'org-roam-server-light
   :type 'string)
@@ -88,7 +88,7 @@ or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
   :group 'org-roam-server-light
   :type 'string)
 
-(defvar org-roam-server-light-last-roam-buffer nil
+(defvar org-roam-server-light-last-roam-buffer ""
   "Variable storing name of the last org-roam buffer.")
 
 (defun org-roam-server-light-update-last-buffer ()
