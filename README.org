@@ -25,54 +25,92 @@ Add following elisp code into your emacs config and ensure that =org-roam-server
 
 ** Elisp code
 if you are using doom emacs
+
+#+BEGIN_SRC emacs-lisp
+;; .doom.d/packages.el
+
+(package! org-roam-server-light
+  :recipe (:host github :repo "AloisJanicek/org-roam-server-light"
+           :files ("*")))
+#+END_SRC
+
 #+BEGIN_SRC emacs-lisp
 ;; .doom.d/config.el
 
-(after! org-roam
-  ;; OPTIONAL: customize some settings or leave them to their defaults
-  ;; enable arrows
-  (setq org-roam-server-light-network-vis-options
-        "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.5 } } } }"
-        ;; change background color of web application
+(use-package! org-roam-server-light
+  :after org-roam
+  :commands org-roam-server-light-mode
+  :config
+  ;; MANDATORY: path to your local copy of this repository
+  (setq org-roam-server-light-dir "~/org-roam-server-light"
+        ;; OPTIONAL example: enable arrows
+        org-roam-server-light-network-vis-options "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.15 } } } }"
+
+        ;; OPTIONAL example: change background color of web application
         org-roam-server-light-style "body.darkmode { background-color: #121212!important; }"
-        ;; set default set of excluded or included tags
+
+        ;; OPTIONAL example: set default set of excluded or included tags
         ;; customize only the value of id, in this case "test" and "journal"
         org-roam-server-light-default-include-filters "[{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
         org-roam-server-light-default-exclude-filters "[{ \"id\": \"journal\", \"parent\" : \"tags\"  }]"
         )
-
-  ;; MANDATORY: path to your local copy of this repository
-  (setq org-roam-server-light-dir "~/org-roam-server-light")
-
-  ;; finally load the main elisp file
-  (load! (expand-file-name "org-roam-server-light.el" org-roam-server-light-dir))
   )
 #+END_SRC
 
-or if you are using other emacs
+if you are using other emacs with use-package
+
+#+BEGIN_SRC emacs-lisp
+;; .emacs.d/init.el
+
+(use-package org-roam-server-light
+  ;; MANDATORY: path to your local copy of this repository
+  :load-path "/home/john/where-i-cloned-this"
+  :after org-roam
+  :commands org-roam-server-light-mode
+  :config
+  ;; MANDATORY: path to your local copy of this repository
+  (setq org-roam-server-light-dir "/home/john/where-i-cloned-this"
+        ;; OPTIONAL example: enable arrows
+        org-roam-server-light-network-vis-options "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.15 } } } }"
+
+        ;; OPTIONAL example: change background color of web application
+        org-roam-server-light-style "body.darkmode { background-color: #121212!important; }"
+
+        ;; OPTIONAL example: set default set of excluded or included tags
+        ;; customize only the value of id, in this case "test" and "journal"
+        org-roam-server-light-default-include-filters "[{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
+        org-roam-server-light-default-exclude-filters "[{ \"id\": \"journal\", \"parent\" : \"tags\"  }]"
+        )
+  )
+#+END_SRC
+
+or in other emacs
+
 #+BEGIN_SRC emacs-lisp
 ;; .emacs.d/init.el
 
 (eval-after-load 'org-roam
   ;; OPTIONAL: customize some settings or leave them to their defaults
   ;; enable arrows
-  (setq org-roam-server-light-network-vis-options
-        "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.5 } } } }"
-        ;; change background color of web application
+  (setq org-roam-server-light-network-vis-options "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.5 } } } }"
+
+        ;; OPTIONAL example: change background color of web application
         org-roam-server-light-style "body.darkmode { background-color: #121212!important; }"
-        ;; set default set of excluded or included tags
+
+        ;; OPTIONAL example: set default set of excluded or included tags
         ;; customize only the value of id, in this case "test" and "journal"
         org-roam-server-light-default-include-filters "[{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
         org-roam-server-light-default-exclude-filters "[{ \"id\": \"journal\", \"parent\" : \"tags\"  }]"
         )
 
   ;; MANDATORY: path to your local copy of this repository
-  (setq org-roam-server-light-dir "~/org-roam-server-light")
+  (setq org-roam-server-light-dir "/home/john/where-i-cloned-this")
 
   ;; finally load the main elisp file
   (load (expand-file-name "org-roam-server-light.el" org-roam-server-light-dir))
   )
 #+END_SRC
+
 ** Usage
 Running =org-roam-server-light-mode= will start org-roam-server-light server on http://localhost:8080
 
