@@ -10,7 +10,7 @@ It however uses "org-roam(-server)" name but does it out of good intentions:
 =org-roam-server-light= attempts to move [[https://github.com/org-roam/org-roam-server][org-roam-server]] functionality from emacs into external python server process due to subjective poor elisp / emacs performance when computing graph data for larger amount of org-roam files and serving them to web browser.
 
 ** Credits
-Client side code, assets and some elisp copied as they are from [[https://github.com/org-roam/org-roam-server][org-roam-server]]
+Client side code, assets and some elisp copied as they are from [[https://github.com/org-roam/org-roam-server][org-roam-server]],
 python code copied and expanded from [[https://github.com/aklatzke/python-webserver-part-2][aklatzke/python-webserver-part-2]]
 
 ** Prerequisites
@@ -42,7 +42,7 @@ if you are using doom emacs
   :commands org-roam-server-light-mode
   :config
   ;; MANDATORY: path to your local copy of this repository
-  (setq org-roam-server-light-dir "~/org-roam-server-light"
+  (setq org-roam-server-light-dir "/home/john/where-i-cloned-this"
         ;; OPTIONAL example: enable arrows
         org-roam-server-light-network-vis-options "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.15 } } } }"
 
