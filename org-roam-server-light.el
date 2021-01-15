@@ -88,6 +88,14 @@ or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
   :group 'org-roam-server-light
   :type 'string)
 
+(defcustom org-roam-server-light-debug nil
+  "Increase verbosity in output log buffer.
+
+When non-nil, allow python server to be more verbose
+in *org-roam-server-light-output-buffer* buffer."
+  :group 'org-roam-server-light
+  :type 'boolean)
+
 (defvar org-roam-server-light-last-roam-buffer ""
   "Variable storing name of the last org-roam buffer.")
 
@@ -149,8 +157,9 @@ or [{ \"id\": \"test\", \"parent\" : \"tags\"  }]"
         (if (and (stringp org-roam-server-light-dir)
                  (file-writable-p org-roam-server-light-dir)
                  (file-readable-p (expand-file-name "main.py" org-roam-server-light-dir)))
-            (let ((default-directory org-roam-server-light-dir))
-              (start-process-shell-command "org-roam-server-light" "*org-roam-server-light-output-buffer*" "python main.py"))
+            (let ((default-directory org-roam-server-light-dir)
+                  (exec (concat "python main.py" (when org-roam-server-light-debug " -d"))))
+              (start-process-shell-command "org-roam-server-light" "*org-roam-server-light-output-buffer*" exec))
           (user-error "Looks like %s isn't valid org-roam-server-light-dir" org-roam-server-light-dir))))))
 
 (provide 'org-roam-server-light)
