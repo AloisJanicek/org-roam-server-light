@@ -42,7 +42,9 @@ if you are using doom emacs
   :commands org-roam-server-light-mode
   :config
   ;; MANDATORY: path to your local copy of this repository
-  (setq org-roam-server-light-dir "/home/john/where-i-cloned-this"
+
+  (require 'straight)
+  (setq org-roam-server-light-dir (straight--repos-dir (symbol-name 'org-roam-server-light))
         ;; OPTIONAL example: enable arrows
         org-roam-server-light-network-vis-options "{ \"edges\": { \"arrows\": { \"to\": { \"enabled\": true,\"scaleFactor\": 1.15 } } } }"
 
