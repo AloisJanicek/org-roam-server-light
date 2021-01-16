@@ -142,3 +142,17 @@ Running =org-roam-server-light-mode= will start org-roam-server-light server on 
 - [ ] review exported files encoding issues on Windows (cp-1252 vs utf-8 weirdness)
 - [ ] review mechanism of sharing data between emacs and python web-server
   currently emacs writes data as text to plain-text files for python web-server to read it
+
+** Licence
+org-roam-server-light is licensed under the MIT License.
+
+Licence of python part of the code is unclear because there is no licence specified in [[https://github.com/aklatzke/python-webserver-part-2][aklatzke/python-webserver-part-2]], which is where the python code originates
+
+For Javascript and CSS libraries please refer to;
+
+https://github.com/jquery/jquery/blob/master/LICENSE.txt
+https://github.com/visjs/vis-network
+https://github.com/twbs/bootstrap/blob/master/LICENSE
+https://github.com/gongzhitaao/orgcss
+https://github.com/select2/select2
+https://github.com/minhur/bootstrap-toggle/blob/master/LICENSE
