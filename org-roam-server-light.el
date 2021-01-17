@@ -46,7 +46,11 @@
   :group 'org-roam)
 
 (defcustom org-roam-server-light-dir nil
-  "Directory contenting org-roam-server-light repository."
+  "Directory contenting org-roam-server-light repository.
+
+When left set to nil, directory will be guessed based on
+the file where `org-roam-server-light' is defined.
+"
   :group 'org-roam-server-light
   :type 'string)
 
@@ -154,13 +158,14 @@ in *org-roam-server-light-output-buffer* buffer."
         (f-write-text org-roam-directory
                       'utf-8
                       (expand-file-name "org-roam-directory" org-roam-server-light-tmp-dir))
-        (if (and (stringp org-roam-server-light-dir)
-                 (file-writable-p org-roam-server-light-dir)
-                 (file-readable-p (expand-file-name "main.py" org-roam-server-light-dir)))
-            (let ((default-directory org-roam-server-light-dir)
-                  (exec (concat "python main.py" (when org-roam-server-light-debug " -d"))))
-              (start-process-shell-command "org-roam-server-light" "*org-roam-server-light-output-buffer*" exec))
-          (user-error "Looks like %s isn't valid org-roam-server-light-dir" org-roam-server-light-dir))))))
+
+        (let ((default-directory (or org-roam-server-light-dir
+                                     (file-name-directory (symbol-file #'org-roam-server-light-mode))))
+              (exec (concat "python main.py" (when org-roam-server-light-debug " -d"))))
+          (if (and (file-writable-p default-directory)
+                   (file-readable-p (expand-file-name "main.py" default-directory)))
+              (start-process-shell-command "org-roam-server-light" "*org-roam-server-light-output-buffer*" exec)
+            (user-error "Looks like there isn't \"main.py\" to start server in the %s directory" default-directory)))))))
 
 (provide 'org-roam-server-light)
 ;;; org-roam-server-light.el ends here
