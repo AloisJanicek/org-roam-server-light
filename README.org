@@ -1,6 +1,11 @@
 #+TITLE: Readme
 
 * org-roam-server-light
+** Org-roam v2
+For the =org-roam v2= use [[https://github.com/org-roam/org-roam-ui][org-roam-ui]] instead.
+=org-roam-server-light= only works with =org-roam v1= and will not be actively maintained.
+----------------------------------------------------------------------------------------------------
+
 This project is NOT part of official [[https://www.orgroam.com/][Org-roam]] project.
 This project started as personal experiment, proof-of-concept and doesn't aspire to become something more then that.
 It however uses "org-roam(-server)" name but does it out of good intentions:
